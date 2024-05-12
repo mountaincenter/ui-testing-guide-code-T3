@@ -1,0 +1,23 @@
+x-common: &common
+  build:
+    args:
+      - NODE_VER=21.7.1
+    context: .
+    dockerfile: Dockerfile
+  volumes:
+    - .:/usr/src/app
+  environment:
+    - CHOKIDAR_USEPOLLING=true
+
+services:
+  web:
+    <<: *common
+    ports:
+      - "3000:3000"
+    command: sh -c "yarn dev"
+
+  storybook:
+    <<: *common
+    ports:
+      - "6006:6006"
+    command: sh -c "yarn storybook"
